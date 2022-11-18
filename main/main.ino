@@ -10,6 +10,7 @@ float fsrConductance;
 void setup(void) {
   Serial.begin(9600);
   pinMode(ledPin, OUTPUT);
+  analogReference(DEFAULT);
 }
 
 void loop(void) {
@@ -34,7 +35,8 @@ void loop(void) {
     // Ffsr = ((Vcc - V) * R) / V
     fsrForce = fsrConductance / 80;
     //Serial.print("Force in Newtons: ");
-    Serial.println(fsrForce);
+    //Serial.println(fsrForce);
+    Serial.println(fsrVoltage);
   }
   ledLevel = map(fsrReading, 0, 1023, 0, 255);
   analogWrite(ledPin, ledLevel);
