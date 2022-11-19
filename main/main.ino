@@ -7,12 +7,12 @@ float fsrForce;
 float fsrVoltage;
 float fsrResistance;
 float fsrConductance;
-float botGreen = 100;
-float topGreen = 150;
-float botRed = 200;
-float topRed = 250;
-float botBlue = 100;
-float topBlue = 250;
+float botGreen = 401;
+float topGreen = 1000;
+float botRed = 151;
+float topRed = 400;
+float botBlue = 30;
+float topBlue = 150;
 
 void setup(void) {
   Serial.begin(9600);
