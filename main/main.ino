@@ -1,15 +1,22 @@
 int fsrPin = 0;
-int ledPin = 1;
+int ledR = 7;
+int ledG = 4;
+int ledB = 2;
 float fsrReading;
 int ledLevel;
 float fsrForce;
 float fsrVoltage;
 float fsrResistance;
 float fsrConductance;
+float thres1 = 3000; 
+float thres2 = 2000;
+float thres3 = 1000;
 
 void setup(void) {
   Serial.begin(9600);
-  pinMode(ledPin, OUTPUT);
+  pinMode(ledR, OUTPUT);
+  pinMode(ledG, OUTPUT);
+  pinMode(ledB, OUTPUT);
   analogReference(DEFAULT);
 }
 
@@ -24,6 +31,23 @@ void loop(void) {
   if (fsrVoltage == 0) {
     Serial.println("No pressure");
   } else {
+    if (fsrVoltage >= thres1) {
+      digitalWrite(ledR, HIGH);
+      digitalWrite(ledG, LOW);
+      digitalWrite(ledB, LOW);
+    } else if (fsrVoltage >= thres2) {
+      digitalWrite(ledG, HIGH);
+      digitalWrite(ledR, LOW);
+      digitalWrite(ledB, LOW);
+    } else if (fsrVoltage >= thres3) {
+      digitalWrite(ledB, HIGH);
+      digitalWrite(ledR, LOW);
+      digitalWrite(ledG, LOW);
+    } else {
+      digitalWrite(ledR, LOW);
+      digitalWrite(ledG, LOW);
+      digitalWrite(ledB, LOW);
+    }
     // Vout = Vcc * R / (R + FSR) R = 10K, Vcc = 5V
     fsrResistance = 5000 - fsrVoltage;
     fsrResistance *= 10000;
@@ -38,7 +62,5 @@ void loop(void) {
     //Serial.println(fsrForce);
     Serial.println(fsrVoltage);
   }
-  ledLevel = map(fsrReading, 0, 1023, 0, 255);
-  analogWrite(ledPin, ledLevel);
   delay(200);
 }
