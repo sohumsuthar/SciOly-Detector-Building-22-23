@@ -2,17 +2,17 @@ int fsrPin = 0;
 int ledR = 7;
 int ledG = 4;
 int ledB = 2;
-int ledLevel;
+int resistor = 1000;
 float fsrForce;
 float fsrVoltage;
 float fsrResistance;
 float fsrConductance;
-float botGreen;
-float topGreen;
-float botRed;
-float topRed;
-float botBlue;
-float topBlue;
+float botGreen = 100;
+float topGreen = 150;
+float botRed = 200;
+float topRed = 250;
+float botBlue = 100;
+float topBlue = 250;
 
 void setup(void) {
   Serial.begin(9600);
@@ -23,7 +23,7 @@ void setup(void) {
 }
 
 void loop(void) {
-  fsrVoltage = getVoltage();
+  fsrVoltage = getVoltage()/1000;
   // Serial.print("mV = ");
   // Serial.println(fsrVoltage);
   // Serial.print(",");
@@ -36,24 +36,25 @@ void loop(void) {
   
     // Ffsr = ((Vcc - V) * R) / V
     fsrForce = getNewtons(fsrVoltage);
-    //Serial.print("Force in Newtons: ");
-    //Serial.println(fsrForce);
+    Serial.print("Voltage(V): ");
     Serial.println(fsrVoltage);
+    Serial.print("Mass(g): ");
     Serial.println(fsrForce);
+    ledstuff(fsrForce);
   }
   delay(200);
 }
-void ledstuff(float volt){
+void ledstuff(float mass){
   digitalWrite(ledR, LOW);
   digitalWrite(ledG, LOW);
   digitalWrite(ledB, LOW);
-  if (volt >= botRed && volt <= topRed) {
+  if (mass >= botRed && mass <= topRed) {
         digitalWrite(ledR, HIGH);
   }
-  if (volt >= botGreen && volt <= topGreen) {
+  if (mass >= botGreen && mass <= topGreen) {
         digitalWrite(ledG, HIGH);
   }
-  if (volt >= botBlue && volt <= topBlue) {
+  if (mass >= botBlue && mass <= topBlue) {
         digitalWrite(ledB, HIGH);
   }
 
@@ -70,7 +71,5 @@ float getVoltage(){
 
 }
 float getNewtons(float voltage){
-  fsrResistance = 1000 * voltage/(5000-voltage);
-  fsrConductance = 1/fsrResistance;
-  return fsrConductance*fsrConductance;
+  return (75 * voltage * voltage - 338.5 * voltage + 433.5);
 }
