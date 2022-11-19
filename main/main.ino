@@ -23,7 +23,7 @@ void setup(void) {
 }
 
 void loop(void) {
-  fsrVoltage = getVoltage()/1000;
+  fsrVoltage = getVoltage() / 1000;
   // Serial.print("mV = ");
   // Serial.println(fsrVoltage);
   // Serial.print(",");
@@ -33,7 +33,7 @@ void loop(void) {
     Serial.println("No pressure");
   } else {
     // Vout = Vcc * R / (R + FSR) R = 10K, Vcc = 5V
-  
+
     // Ffsr = ((Vcc - V) * R) / V
     fsrForce = getNewtons(fsrVoltage);
     Serial.print("Voltage(V): ");
@@ -44,32 +44,30 @@ void loop(void) {
   }
   delay(200);
 }
-void ledstuff(float mass){
+void ledstuff(float mass) {
   digitalWrite(ledR, LOW);
   digitalWrite(ledG, LOW);
   digitalWrite(ledB, LOW);
   if (mass >= botRed && mass <= topRed) {
-        digitalWrite(ledR, HIGH);
+    digitalWrite(ledR, HIGH);
   }
   if (mass >= botGreen && mass <= topGreen) {
-        digitalWrite(ledG, HIGH);
+    digitalWrite(ledG, HIGH);
   }
   if (mass >= botBlue && mass <= topBlue) {
-        digitalWrite(ledB, HIGH);
+    digitalWrite(ledB, HIGH);
   }
-
 }
-float getVoltage(){
+float getVoltage() {
   int analogVolts = 0;
   int numSamples = 15;
-  for(int i = 0; i<numSamples; i++){
-      analogVolts = analogVolts + analogRead(fsrPin);
-      delay(50);
+  for (int i = 0; i < numSamples; i++) {
+    analogVolts = analogVolts + analogRead(fsrPin);
+    delay(50);
   }
-  analogVolts = analogVolts/numSamples;
+  analogVolts = analogVolts / numSamples;
   return map(analogVolts, 0, 1023, 0, 5000);
-
 }
-float getNewtons(float voltage){
+float getNewtons(float voltage) {
   return (75 * voltage * voltage - 338.5 * voltage + 433.5);
 }
