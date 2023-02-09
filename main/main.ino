@@ -1,8 +1,8 @@
 int fsrPin = 0;
-int ledR = 7;
-int ledG = 4;
-int ledB = 2;
-int resistor = 1000;
+int ledR = 11;
+int ledG = 10;
+int ledB = 12;
+int resistor = 9720;
 float fsrForce;
 float fsrVoltage;
 float fsrResistance;
@@ -19,7 +19,7 @@ void setup(void) {
   pinMode(ledR, OUTPUT);
   pinMode(ledG, OUTPUT);
   pinMode(ledB, OUTPUT);
-  analogReference(DEFAULT);
+  analogReference(EXTERNAL);
 }
 
 void loop(void) {
@@ -67,7 +67,7 @@ float getVoltage(){
       delay(50);
   }
   analogVolts = analogVolts/numSamples;
-  return map(analogVolts, 0, 1023, 0, 5000);
+  return map(analogVolts, 0, 1023, 3300, 00);
 
 }
 float getNewtons(float voltage){
