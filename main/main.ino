@@ -8,12 +8,12 @@ float fsrForce;
 float fsrVoltage;
 float fsrResistance;
 float fsrConductance;
-float botGreen = 500;
-float topGreen = 1000;
-float botRed = 100;
-float topRed = 500;
-float botBlue = 30;
-float topBlue = 100;
+float botGreen = 0;
+float topGreen = 100;
+float botRed = 141;
+float topRed = 1000;
+float botBlue = 101;
+float topBlue = 140;
 float e = M_E;
 
 void setup(void) {
